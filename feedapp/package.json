@@ -1,6 +1,6 @@
 {
   "name": "feedapp",
-  "homepage": "http://riyaztrad.github.io/feedApp",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
