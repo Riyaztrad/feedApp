@@ -8,11 +8,13 @@ import {fetchDialogVisible, showCreateDialog, createFeed} from 'generic';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import {FileUpload} from '../fileUpload'
-
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -31,14 +33,33 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    formControl: {
+        width: '100%',
+
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    dialog: {
+        width: '100%',
+    },
 }));
 
+const dropData = [{
+    compiagntitle: "Build a proper shelter for children studying at Quran and Hifdh school in Chad.",
+    compiagnId: "1234"
+},
+{
+    compiagntitle: "Qurbani Udhiyah for Orphans, Widows and Needy in Africa.",
+    compiagnId: "78612"
+}
+]
 export const FeedForm = () => {
     const classes = useStyles();
     const isVisible = useSelector(fetchDialogVisible)
     const dispatch = useDispatch();
-    const [compaignId, setCompaignId] = useState(0)
-    const [feedid, setFeedid] = useState(0)
+    const [compaignId, setCompaignId] = useState('')
+    const [compaigntitle, setCompaignTitle] = useState('')
     const [feedDescription, setFeedDescription] = useState('')
     const [open, setOpen] = React.useState(false);
     const [openerror, setErrOpen] = React.useState(false);
@@ -83,12 +104,12 @@ export const FeedForm = () => {
             })
             let data = {
                 compiagn_id: compaignId,
-                compiagn_title: feedid,
+                compiagn_title: compaigntitle,
                 description: feedDescription,
                 object_urls: imgobj
             }
             const result = await dispatch(createFeed(data));
-            console.log("result", result);
+           
             if (result.type === "feed/createFeed/fulfilled") {
                 handleClick()
                 handleDialogeClose()
@@ -133,7 +154,13 @@ export const FeedForm = () => {
     }
 
 
+    const handleChange = (event) => {
 
+        const comp = dropData.find(x => x.compiagnId === event.target.value)
+        setCompaignId(event.target.value);
+        setCompaignTitle(comp.compiagntitle)
+
+    };
     return (
 
 
@@ -142,79 +169,75 @@ export const FeedForm = () => {
             onClose={handleDialogeClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            className={classes.dialog}
         >
             <DialogTitle id="alert-dialog-title">
                 <Typography component="h1" variant="h5">
                     Create New Feed
                 </Typography>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent style={{width:'500px'}}>
 
-                <Container component="main" maxWidth="md">
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="CompaignId"
-                            inputMode="numeric"
-                            label="Compaign Id"
-                            name="Compaign Id"
-                            autoFocus
-                            onChange={(event) => setCompaignId(event.target.value)}
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="FeedId"
-                            inputMode="numeric"
-                            label="Feed Title"
-                            name="Feed title"
-                            autoFocus
-                            onChange={(event) => setFeedid(event.target.value)}
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            multiline
-                            rows={5}
-                            name="feedDescription"
-                            label="Feed Description"
-                            id="feedDescription"
-                            onChange={(event) => setFeedDescription(event.target.value)}
 
-                        />
-                        {setFilecomponents}
-                        {/* <FileUpload
-                            handleUploadChange={handleUploadChange} /> */}
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            className={classes.submit}
-                            onClick={submit}
+                <form className={classes.form} noValidate>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-outlined-label">Compiagn</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={compaignId}
+                            onChange={handleChange}
+                            label="compiagn"
                         >
-                            Create
-                        </Button>
-                    </form>
+                            {dropData.map((item, index) => {
+                                return (
+                                    <MenuItem value={item.compiagnId}>{item.compiagntitle}</MenuItem>
+                                )
+                            })
+                            }
 
-                    <Snackbar open={openerror} autoHideDuration={6000} onClose={handleErrClose}>
-                        <Alert onClose={handleErrClose} severity="error">
-                            Something went wrong!
-                        </Alert>
-                    </Snackbar>
-                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                        <Alert onClose={handleClose} severity="success">
-                            Created Successfully!
-                        </Alert>
-                    </Snackbar>
-                </Container>
+                        </Select>
+                    </FormControl>
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        multiline
+                        rows={5}
+                        name="feedDescription"
+                        label="Feed Description"
+                        id="feedDescription"
+                        onChange={(event) => setFeedDescription(event.target.value)}
+
+                    />
+                    {setFilecomponents}
+                    {/* <FileUpload
+                            handleUploadChange={handleUploadChange} /> */}
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        className={classes.submit}
+                        onClick={submit}
+                    >
+                        POST
+                    </Button>
+                </form>
+
+                <Snackbar open={openerror} autoHideDuration={6000} onClose={handleErrClose}>
+                    <Alert onClose={handleErrClose} severity="error">
+                        Something went wrong!
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                        Created Successfully!
+                    </Alert>
+                </Snackbar>
+
 
             </DialogContent>
 

@@ -4,7 +4,6 @@ import 'react-slideshow-image/dist/styles.css'
 
 
 export const Slideshow = ({feedImages}) => {
-    console.log("feedImages", feedImages)
     return (
         <div>
             <Slide easing="ease"

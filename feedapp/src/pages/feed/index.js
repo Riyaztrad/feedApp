@@ -19,7 +19,6 @@ export const Feed = () => {
     const [feeds, setFeeds] = useState([]);
     const [isReady, setIsReady] = useState(false);
     const newFeed = useSelector(({feedReducer}) => feedReducer.isCreated)
-    console.log("createNewFeed", newFeed)
     useEffect(() => {
         setIsReady(false)
         const getFeeds = () => {
@@ -30,7 +29,6 @@ export const Feed = () => {
             Promise.resolve()
                 .then(() => getFeeds())
                 .then((values) => {
-                    console.log("result", values)
                     if (values.payload) {
                         setFeeds(values.payload.items)
                     }

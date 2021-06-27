@@ -42,7 +42,6 @@ export const createFeed = createAsyncThunk(
     'feed/createFeed',
     async (data) => {
         try {
-            console.log("data",data)
             const response = await createFeeds(LOCALES.endpoints.create_feed,data);
             return response;
         } catch (err) {
