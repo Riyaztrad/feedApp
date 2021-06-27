@@ -1,0 +1,11 @@
+endpoints:
+  POST - https://elm9wzmqq4.execute-api.ap-south-1.amazonaws.com/dev/create-feed
+  GET - https://elm9wzmqq4.execute-api.ap-south-1.amazonaws.com/dev/get-all-feeds
+  GET - https://elm9wzmqq4.execute-api.ap-south-1.amazonaws.com/dev/get-feed-by-Id/{compiagn_id}
+  POST - https://elm9wzmqq4.execute-api.ap-south-1.amazonaws.com/dev/image-upload
+  PUT - https://elm9wzmqq4.execute-api.ap-south-1.amazonaws.com/dev/update-feed-by-Id/{feedID}
+
+
+  {
+    "like": "1"
+}

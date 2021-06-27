@@ -4,11 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton'
-import {useDispatch} from 'react-redux';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {showCreateDialog} from 'generic'
+import logo from '../../assets/logo.png'
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -25,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        paddingTop: 10,
-        paddingBottom: 10,
+        // paddingTop: 10,
+        // paddingBottom: 10,
+        backgroundColor: '#24b877',
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -80,27 +77,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const AppConainer = ({children}) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-
     return (
         <div>
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar)}>
                 <Toolbar className={classes.toolbar}>
-
-                    <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
-                        {"Campaigns Updates".toUpperCase()}
-                        <Typography component="h1" variant="subtitle1" color="inherit" noWrap className={classes.caption}>
-                            Donate Now - Help Today
-                        </Typography>
-                    </Typography>
-                    <IconButton color="inherit"
-                        onClick={() => {
-                            dispatch(showCreateDialog({isVisible:true}))
-                        }}>
-                        <AddCircleIcon className={classes.addIcon} />
-                    </IconButton>
+                    <img src={logo} style={{height: 90, width: 230}} alt="logo 1" />
+                  
                 </Toolbar>
             </AppBar>
 

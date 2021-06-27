@@ -43,25 +43,21 @@ const get = async (url) => {
 
 const post = async (url, data) => {
     return fetch(
-        url,{
-            method: 'POST',
-            headers: {
-                CompanyId:0,
-                Accept: 'application/json',
-                "Content-Type": "application/json"
-            },
-            body:JSON.stringify(data),
+        url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": "application/json"
         },
+        body: JSON.stringify(data),
+    },
     )
-        .then((response) => {
-            console.log("response",response)
-            renderResponse(url, response)
-        })
+    .then((response) => renderResponse(url, response))
         .catch((resp) => {
             if (__DEV__) {
 
             }
-            console.log("resp",resp);
+            console.log("resp", resp);
             return Promise.reject();
         });
 };

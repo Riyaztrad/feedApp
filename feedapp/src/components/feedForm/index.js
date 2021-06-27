@@ -4,14 +4,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchDialogVisible, showCreateDialog} from 'generic';
+import {fetchDialogVisible, showCreateDialog, createFeed} from 'generic';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import {FileUpload} from '../fileUpload'
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -39,14 +40,10 @@ export const FeedForm = () => {
     const [compaignId, setCompaignId] = useState(0)
     const [feedid, setFeedid] = useState(0)
     const [feedDescription, setFeedDescription] = useState('')
-    const [imageUrl, setImageUrl] = useState('')
-    const [videoUrl, setVideoUrl] = useState('')
-    const [like, setLike] = useState(0)
-    const [love, setLove] = useState(0)
-    const [support, setSupport] = useState(0)
     const [open, setOpen] = React.useState(false);
     const [openerror, setErrOpen] = React.useState(false);
-
+    const [images, setImages] = useState([])
+    const [fileCount, setFileCount] = useState(1)
     const handleClick = () => {
         setOpen(true);
     };
@@ -70,53 +67,36 @@ export const FeedForm = () => {
         setErrOpen(false);
     };
 
-
+    function uploadedImages(file) {
+        setImages([...images, file])
+    }
     const submit = async (event) => {
         event.preventDefault();
-        console.log("data")
         try {
-            let data = {
-                CompaignId: compaignId,
-                feedId: feedid,
-                feedDescription: feedDescription,
-                objectUrls: [
-                    {
-                        type: "image",
-                        url: imageUrl
-                    },
-                    {
-                        type: "video",
-                        url: videoUrl
-                    }
-                ],
-                my_reactions: {
-                    reaction: "true",
-                    type: "like"
-                },
-                reactions: {
-                    like: like,
-                    love: love,
-                    support: support
-                },
-                createDts: new Date(),
-                updateDts: new Date(),
-            }
-            const apiUrl = `https://api.github.com/users/hacktivist123/repos`;//please change this api with post api
-            const response = await fetch(
-                apiUrl, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                },
-                body: data,
+            let imgobj = [];
+            images.map((item, index) => {
+                imgobj.push({
+                    type: 'image',
+                    imageUrl: item
+                })
+                return 0;
             })
-            const responseJson = await response.json();
-            if (responseJson.message === "Not Found") {
-                handleErrClick()
-            } else {
-                handleClick()
+            let data = {
+                compiagn_id: compaignId,
+                compiagn_title: feedid,
+                description: feedDescription,
+                object_urls: imgobj
             }
-            console.log("response", responseJson)
+            const result = await dispatch(createFeed(data));
+            console.log("result", result);
+            if (result.type === "feed/createFeed/fulfilled") {
+                handleClick()
+                handleDialogeClose()
+                setFileCount(0)
+            } else {
+                handleErrClick()
+            }
+
         } catch (err) {
             console.log("error", err)
         }
@@ -125,6 +105,35 @@ export const FeedForm = () => {
     const handleDialogeClose = () => {
         dispatch(showCreateDialog({isVisible: false}))
     };
+    const setFilecomponents = [];
+    const addOne = () => {
+        setFileCount(fileCount + 1)
+    }
+    const removeOne = (curr, index) => {
+        if (index > -1) {
+            setFilecomponents.splice(index, 1)
+            setFileCount(setFilecomponents.length)
+        }
+        //    
+    }
+    const uploadImage = () => {
+
+    }
+
+    for (var i = 0; i < fileCount; i++) {
+        setFilecomponents.push(
+            <FileUpload
+                index={i}
+                uploadedImages={uploadedImages}
+                addOne={addOne}
+                removeOne={removeOne}
+                setFilecomponents={setFilecomponents}
+                uploadImage={uploadImage}
+            />)
+    }
+
+
+
     return (
 
 
@@ -162,8 +171,8 @@ export const FeedForm = () => {
                             fullWidth
                             id="FeedId"
                             inputMode="numeric"
-                            label="Feed Id"
-                            name="Feed Id"
+                            label="Feed Title"
+                            name="Feed title"
                             autoFocus
                             onChange={(event) => setFeedid(event.target.value)}
                         />
@@ -180,103 +189,19 @@ export const FeedForm = () => {
                             onChange={(event) => setFeedDescription(event.target.value)}
 
                         />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
+                        {setFilecomponents}
+                        {/* <FileUpload
+                            handleUploadChange={handleUploadChange} /> */}
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
                             fullWidth
-                            name="imageUrl"
-                            label="Image Url"
-                            id="imageUrl"
-                            onChange={(event) => setImageUrl(event.target.value)}
-
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="videoUrl"
-                            label="Video Url"
-                            id="videoUrl"
-                            onChange={(event) => setVideoUrl(event.target.value)}
-
-                        />
-                        <Grid container spacing={2}>
-                            <Grid item xs={4}>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="like"
-                                    inputMode="numeric"
-                                    label="Like"
-                                    name="like"
-                                    autoFocus
-                                    onChange={(event) => setLike(event.target.value)}
-
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="love"
-                                    inputMode="numeric"
-                                    label="Love"
-                                    name="love"
-                                    autoFocus
-                                    onChange={(event) => setLove(event.target.value)}
-
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    id="support"
-                                    inputMode="numeric"
-                                    label="Support"
-                                    name="support"
-                                    autoFocus
-                                    onChange={(event) => setSupport(event.target.value)}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                    onClick={(event) => {
-                                        handleDialogeClose()
-                                    }}
-                                >
-                                    Close
-                                </Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}
-                                    onClick={submit}
-                                >
-                                    Create
-                                </Button>
-                            </Grid>
-
-                        </Grid>
-
+                            className={classes.submit}
+                            onClick={submit}
+                        >
+                            Create
+                        </Button>
                     </form>
 
                     <Snackbar open={openerror} autoHideDuration={6000} onClose={handleErrClose}>

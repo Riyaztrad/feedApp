@@ -1,16 +1,18 @@
 import {post, get} from './requests';
-import {getAppConfiguration} from '../config';
-import {LOCALES} from '../config';
 
-const getFeeds = () => {
-    return get(getAppConfiguration().BASE_URL + LOCALES.endpoints.fetchFeed);
+const getFeeds = (url) => {
+    return get(url);
 };
 
-const createFeeds = (data) => {
-    return post(getAppConfiguration().BASE_URL + LOCALES.endpoints.createFeed, data);
+const upload_image=(url,data) => {
+    return post(url, data);
+};
+const createFeeds = (url,data) => {
+    return post(url, data);
 };
 
 export {
     getFeeds,
-    createFeeds
+    createFeeds,
+    upload_image
 };

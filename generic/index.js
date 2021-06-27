@@ -2,7 +2,10 @@ export {createStoreAndPersistor} from './src/redux/store';
 export {
     fetchFeed,
     showCreateDialog,
-    fetchDialogVisible
+    fetchDialogVisible,
+    uploadimage,
+    createFeed,
+    createNewFeed
 } from './src/redux/reducers/feedReducer';
 
 export {

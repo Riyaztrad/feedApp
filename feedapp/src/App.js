@@ -10,6 +10,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 import {APP_CONFIG} from './utils/config';
 import {Router} from './navigation';
+import './index.css'
 const {persistor, store} = createStoreAndPersistor(storage);
 function App() {
   useEffect(() => {
@@ -20,7 +21,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <div className="App">
+        <div className="back">
           <Router />
         </div>
       </PersistGate>
