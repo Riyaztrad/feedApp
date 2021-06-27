@@ -97,7 +97,7 @@ export const FeedCard = ({data, index}) => {
                                 <MoreVertIcon />
                             </IconButton>
                         }
-                        title={data.compiagn_id}
+                        title={data.compiagn_title}
                         subheader={timeago(data.createAt)}
                     />
                     {
