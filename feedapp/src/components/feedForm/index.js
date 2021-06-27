@@ -113,7 +113,7 @@ export const FeedForm = () => {
             if (result.type === "feed/createFeed/fulfilled") {
                 handleClick()
                 handleDialogeClose()
-                setFileCount(0)
+                setFileCount(1)
             } else {
                 handleErrClick()
             }
@@ -124,6 +124,7 @@ export const FeedForm = () => {
 
     }
     const handleDialogeClose = () => {
+        setFileCount(1)
         dispatch(showCreateDialog({isVisible: false}))
     };
     const setFilecomponents = [];

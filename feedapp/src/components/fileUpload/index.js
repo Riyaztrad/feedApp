@@ -3,10 +3,11 @@ import Button from '@material-ui/core/Button'
 import {green} from '@material-ui/core/colors';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import BackupIcon from '@material-ui/icons/Backup';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'; 
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Grid from '@material-ui/core/Grid';
 import {uploadimage} from 'generic';
 import {useDispatch} from 'react-redux'
+import Typography from '@material-ui/core/Typography';
 
 
 export const FileUpload = ({
@@ -55,19 +56,30 @@ export const FileUpload = ({
 
                 <Grid conatainer spacing={2}>
                     <Grid item xs={6}>
-                        <img src={file}  style={{height: 100, width: '100%'}} alt="feed" />
-                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <img src={file} style={{height: 100, width: '100%'}} alt="feed" />
+                        <div style={{display: 'flex', justifyContent: 'space-between',marginBottom:10}}>
                             {isUploaded ?
                                 <CheckCircleIcon style={{fontSize: 35}} />
                                 :
-                                <BackupIcon
-                                    style={{fontSize: 35}}
-                                    onClick={() => {uploadImage(setFilecomponents[index], index)}}
-                                />
+                                <div style={{width: 150, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                    <BackupIcon
+                                        style={{fontSize: 35}}
+                                        onClick={() => {uploadImage(setFilecomponents[index], index)}}
+                                    />
+                                    <Typography component="p" variant="p">
+                                        Upload to S3
+                                    </Typography>
+                                </div>
                             }
-                            <AddCircleIcon style={{color: green[500], fontSize: 35}}
-                                onClick={addOne}
-                            />
+                            <div style={{width: 150, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                <AddCircleIcon style={{color: green[500], fontSize: 35}}
+                                    onClick={addOne}
+                                />
+                                <Typography component="p" variant="p">
+                                    Add More
+                                </Typography>
+                            </div>
+
 
                             {/* <DeleteIcon style={{color: 'red',fontSize:35}}
                                     onClick={() => {removeOne(setFilecomponents[index], index)}}
