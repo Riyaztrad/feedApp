@@ -9,7 +9,13 @@
 /coverage
 
 # production
-/build
+# build
+/src
+/public
+/endpoint.txt
+/package.json
+/yarn.lock
+
 /node_modules
 # misc
 .DS_Store
