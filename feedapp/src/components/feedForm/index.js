@@ -177,7 +177,7 @@ export const FeedForm = () => {
                     Create New Feed
                 </Typography>
             </DialogTitle>
-            <DialogContent style={{width:'500px'}}>
+            <DialogContent style={{width:'100%'}}>
 
 
                 <form className={classes.form} noValidate>
