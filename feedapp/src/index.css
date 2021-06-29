@@ -6,10 +6,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 .back {
-  background-image: url("https://sadaqahmail.s3.us-east-2.amazonaws.com/assets/Pages/Home/triangles.jpeg");
+  /* background-image: url("https://sadaqahmail.s3.us-east-2.amazonaws.com/assets/Pages/Home/triangles.jpeg"); */
   background-repeat: no-repeat;
   background-size: cover;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+.seeMore{
+  margin-left: 100;
+}
+.small{
+  font-size: 14px;
+  margin-left: 10px;
 }

@@ -1,4 +1,8 @@
 import React, {useEffect} from 'react';
+import CommentIcon from '@material-ui/icons/Comment';
+import ShowMoreText from 'react-show-more-text';
+import { Link } from 'react-router-dom';
+import SendIcon from '@material-ui/icons/Send';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -76,12 +80,16 @@ export const FeedCard = ({data, index}) => {
     } else {
         feedImage = profileImage
     }
+
+    let executeOnClick = (isExpanded) => {
+        console.log(isExpanded);
+    };
     return (
         <Container className={classes.conatainer}>
             <Box
-                boxShadow={15}
-                bgcolor="background.paper"
-            >
+                // boxShadow={15}
+                bgcolor="background.paper"                                
+            >                              
                 <Card className={classes.root}>
                     <CardHeader
                         avatar={
@@ -100,6 +108,23 @@ export const FeedCard = ({data, index}) => {
                         title={data.compiagn_title}
                         subheader={timeago(data.createAt)}
                     />
+                     <CardContent>
+                            <Typography paragraph>
+                                {/* {data.description} */}
+                                <ShowMoreText
+                                  lines={1}
+                                  more='Show more'
+                                  less='Show less'
+                                  className='content-css'
+                                  anchorClass='my-anchor-css-class'
+                                  onClick={executeOnClick}
+                                  expanded={false}
+                                  width={280}
+                                >
+                                    {data.description}
+                                </ShowMoreText>
+                            </Typography>
+                        </CardContent>
                     {
                         feedImages.length > 1 ?
                             <Slideshow feedImages={feedImages} />
@@ -114,19 +139,28 @@ export const FeedCard = ({data, index}) => {
                     }
 
                     {/* */}
-                    <CardContent>
+                    {/* <CardContent>
                         <Typography variant="body2" color="textSecondary" component="p">
                             {data.compiagn_title}
                         </Typography>
-                    </CardContent>
+                    </CardContent> */}
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites">
                             <HeartButton />
                         </IconButton>
                         <IconButton aria-label="share">
-                            <ShareIcon />
+                            <ShareIcon/> <span className='text-muted small'>Share</span>
                         </IconButton>
-                        <IconButton
+                        <IconButton aria-label="send">
+                          <SendIcon/> <span className='text-muted small'>Send</span>
+                        </IconButton>
+                        <IconButton aria-label="comment">
+                          <CommentIcon/> <span className='text-muted small'>Comment</span>
+                        </IconButton>
+                      
+
+                         
+                        {/* <IconButton
                             className={clsx(classes.expand, {
                                 [classes.expandOpen]: expanded,
                             })}
@@ -135,15 +169,16 @@ export const FeedCard = ({data, index}) => {
                             aria-label="show more"
                         >
                             <ExpandMoreIcon />
-                        </IconButton>
+                        </IconButton> */}
                     </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    
+                    {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
                             <Typography paragraph>
                                 {data.description}
                             </Typography>
                         </CardContent>
-                    </Collapse>
+                    </Collapse> */}
                 </Card>
             </Box>
         </Container>);
