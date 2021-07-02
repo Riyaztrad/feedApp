@@ -1,25 +1,26 @@
 import React, { useEffect } from "react";
-import CommentIcon from "@material-ui/icons/Comment";
+// import CommentIcon from "@material-ui/icons/Comment";
 import ShowMoreText from "react-show-more-text";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
+// import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
+// import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Container from "@material-ui/core/Container";
 import profileImage from "../../assets/event.jpeg";
-import { HeartButton } from "../heartButton";
+// import { HeartButton } from "../heartButton";
 import { Slideshow } from "../imageSlider";
 import Box from "@material-ui/core/Box";
 import logo from "../../assets/avatar.png";
@@ -74,7 +75,7 @@ export const FeedCard = ({ data, index }) => {
     if (
       image.imageUrl.indexOf("png") > 0 ||
       image.imageUrl.indexOf("jpg") > 0 ||
-      image.imageUrl.indexOf("jpeg") > 0
+      image.imageUrl.indexOf("jpeg") 
     ) {
       feedImage = image.imageUrl;
       feedImages = JSON.parse(data.object_urls);
@@ -114,19 +115,20 @@ export const FeedCard = ({ data, index }) => {
             <Typography paragraph>
               {/* {data.description} */}
               <ShowMoreText
-                lines={1}
+                lines={2}
                 more="Show more"
                 less="Show less"
                 className="content-css"
                 anchorClass="my-anchor-css-class"
                 onClick={executeOnClick}
                 expanded={false}
-                width={280}
+                width={800}
               >
                 {data.description}
               </ShowMoreText>
             </Typography>
           </CardContent>
+
           {feedImages.length > 1 ? (
             <Slideshow feedImages={feedImages} />
           ) : (
@@ -140,8 +142,11 @@ export const FeedCard = ({ data, index }) => {
                         </Typography>
                     </CardContent> */}
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
+            {/* <IconButton aria-label="add to favorites">
               <HeartButton />
+            </IconButton> */}
+            <IconButton aria-label="like">
+              <ThumbUpIcon /> <span className="text-muted small">Like</span>
             </IconButton>
             <IconButton aria-label="share">
               <ShareIcon /> <span className="text-muted small">Share</span>
@@ -149,9 +154,6 @@ export const FeedCard = ({ data, index }) => {
             <IconButton aria-label="send">
               <SendIcon /> <span className="text-muted small">Send</span>
             </IconButton>
-            {/* <IconButton aria-label="comment">
-              <CommentIcon /> <span className="text-muted small">Comment</span>
-            </IconButton> */}
 
             {/* <IconButton
                             className={clsx(classes.expand, {
