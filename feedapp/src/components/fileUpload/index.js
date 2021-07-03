@@ -51,7 +51,7 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
     console.log(result)
     if (result.type === "feed/uploadImage/fulfilled") {
       setIsUploaded(true);
-      uploadedImages(result.payload.imageURL,type);
+      uploadedImages(result.payload.imageURL, type);
 
     }
     setIsLoading(false)
@@ -64,8 +64,7 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
       return (
         <img src={file} style={{height: 100, width: "100%"}} alt="feed" />
       )
-    }else if (type === "video/mp4") {
-      console.log("videoFilePath", videoFilePath)
+    } else if (type === "video/mp4") {
       return (
         <ReactPlayer url={videoFilePath} width="100%" height="100%" controls={true} />
 
@@ -113,20 +112,24 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
                   }
                 </div>
               )}
-              <div
-                style={{
-                  width: 150,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <AddCircleIcon style={{color: green[500], fontSize: 35}} onClick={addOne} />
-                <Typography component="p" variant="p">
-                  Add More
-                </Typography>
-              </div>
+              {
+                !isLoading ?
+                  <div
+                    style={{
+                      width: 150,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AddCircleIcon style={{color: green[500], fontSize: 35}} onClick={addOne} />
+                    <Typography component="p" variant="p">
+                      Add More
+                    </Typography>
+                  </div> : null
+              }
+
 
               {/* <DeleteIcon style={{color: 'red',fontSize:35}}
                                     onClick={() => {removeOne(setFilecomponents[index], index)}}

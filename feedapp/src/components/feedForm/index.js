@@ -89,6 +89,7 @@ export const FeedForm = () => {
     };
 
     function uploadedImages(file, type) {
+        console.log("type", type)
         var data = {
             url: file,
             type: type
@@ -99,33 +100,29 @@ export const FeedForm = () => {
         event.preventDefault();
         try {
             let files = [];
-         
+console.log("images",images)
             images.map((item, index) => {
-                if (item.type === "image/png" || item.type === "image/jpeg" || item.type === "image/jpg") {
-                    files.push({
-                        type: 'image',
-                        imageUrl: item
-                    })
-                } else if (item.type === "image/mp4") {
-                    files.push({
-                        type: 'video',
-                        imageUrl: item
-                    })
-                } else {
-                    files.push({
-                        type: 'pdf',
-                        imageUrl: item
-                    })
-                }
+                // if (item.type === "image/png" || item.type === "image/jpeg" || item.type === "image/jpg") {
+                    files.push(item)
+                // } else if (item.type === "video/mp4") {
+                //     files.push({
+                //         file: item
+                //     })
+                // } else {
+                //     files.push({
+                //         file: item
+                //     })
+                // }
                 return 0;
             })
-      
+
             let data = {
                 compiagn_id: compaignId,
                 compiagn_title: compaigntitle,
                 description: feedDescription,
                 object_urls: files
             }
+            console.log("data", data)
             const result = await dispatch(createFeed(data));
 
             if (result.type === "feed/createFeed/fulfilled") {

@@ -69,7 +69,9 @@ export const FeedCard = ({data, index}) => {
       setExpanded(true);
     }
   }, [index]);
-  const image = JSON.parse(data.object_urls)[0];
+  // console.log("data",data)
+  const image = JSON.parse(data.object_urls);
+  console.log("image",image)
   let feedImage = "";
   let feedImages = [{
     url: 'https://www.youtube.com/watch?v=d95PPykB2vE',
@@ -85,21 +87,21 @@ export const FeedCard = ({data, index}) => {
   },
   ];
 
-  if (image) {
-    if (
-      image.imageUrl.indexOf("png") > 0 ||
-      image.imageUrl.indexOf("jpg") > 0 ||
-      image.imageUrl.indexOf("jpeg")
-    ) {
-      feedImage = image.imageUrl;
-      feedImages.push({url:JSON.parse(data.object_urls),type:'jpeg'})
-    } else {
-      // feedImage = profileImage;
-      feedImages = [];
-    }
-  } else {
-    feedImage = profileImage;
-  }
+  // if (image) {
+  //   if (
+  //     image.imageUrl.indexOf("png") > 0 ||
+  //     image.imageUrl.indexOf("jpg") > 0 ||
+  //     image.imageUrl.indexOf("jpeg")
+  //   ) {
+  //     feedImage = image.imageUrl;
+  //     feedImages.push({url:JSON.parse(data.object_urls),type:'jpeg'})
+  //   } else {
+  //     // feedImage = profileImage;
+  //     feedImages = [];
+  //   }
+  // } else {
+  //   feedImage = profileImage;
+  // }
 
   let executeOnClick = (isExpanded) => {
     console.log(isExpanded);
@@ -144,7 +146,7 @@ export const FeedCard = ({data, index}) => {
           </CardContent>
 
           {feedImages.length > 1 ? (
-            <Slideshow feedImages={feedImages} />
+            <Slideshow feedImages={image} />
           ) : (
             feedImage && <CardMedia className={classes.media} image={feedImage} title="Event" />
           )}
