@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
-import { green } from "@material-ui/core/colors";
+import {green} from "@material-ui/core/colors";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import BackupIcon from "@material-ui/icons/Backup";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import Grid from "@material-ui/core/Grid";
-import { uploadimage } from "generic";
-import { useDispatch } from "react-redux";
+import {uploadimage} from "generic";
+import {useDispatch} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
-export const FileUpload = ({ uploadedImages, addOne, setFilecomponents, index }) => {
+export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) => {
   const dispatch = useDispatch();
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("");
@@ -17,6 +17,7 @@ export const FileUpload = ({ uploadedImages, addOne, setFilecomponents, index })
   const [isUploaded, setIsUploaded] = useState(false);
   const selectedFile = (e) => {
     const file = e.target.files[0];
+    console.log("file", file)
     if (!file) {
       return;
     }
@@ -44,15 +45,33 @@ export const FileUpload = ({ uploadedImages, addOne, setFilecomponents, index })
     }
   };
 
+  const Preview = () => {
+
+
+    if (type === "image/png") {
+      return (
+        <img src={file} style={{height: 100, width: "100%"}} alt="feed" />
+      )
+    } if (type === "video/mp4") {
+      return (
+        <div>video</div>
+      )
+    } else {
+      return (
+        <div>pdf</div>
+      )
+    }
+  }
+
   return (
     <div>
       {file ? (
         <Grid conatainer spacing={2}>
           <Grid item xs={6}>
-            <img src={file} style={{ height: 100, width: "100%" }} alt="feed" />
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
+            {Preview()}
+            <div style={{display: "flex", justifyContent: "space-between", marginBottom: 10}}>
               {isUploaded ? (
-                <CheckCircleIcon style={{ fontSize: 35 }} />
+                <CheckCircleIcon style={{fontSize: 35}} />
               ) : (
                 <div
                   style={{
@@ -64,7 +83,7 @@ export const FileUpload = ({ uploadedImages, addOne, setFilecomponents, index })
                   }}
                 >
                   <BackupIcon
-                    style={{ fontSize: 35 }}
+                    style={{fontSize: 35}}
                     onClick={() => {
                       uploadImage(setFilecomponents[index], index);
                     }}
@@ -83,7 +102,7 @@ export const FileUpload = ({ uploadedImages, addOne, setFilecomponents, index })
                   alignItems: "center",
                 }}
               >
-                <AddCircleIcon style={{ color: green[500], fontSize: 35 }} onClick={addOne} />
+                <AddCircleIcon style={{color: green[500], fontSize: 35}} onClick={addOne} />
                 <Typography component="p" variant="p">
                   Add More
                 </Typography>
