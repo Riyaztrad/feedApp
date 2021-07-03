@@ -8,6 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import {uploadimage} from "generic";
 import {useDispatch} from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import ReactPlayer from 'react-player'
+import Pdf from '../../assets/pdf.png'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) => {
   const dispatch = useDispatch();
@@ -15,8 +18,13 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
   const [fileName, setFileName] = useState("");
   const [type, setType] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [videoFilePath, setVideoFilePath] = useState(null);
+
   const selectedFile = (e) => {
     const file = e.target.files[0];
+    setVideoFilePath(URL.createObjectURL(e.target.files[0]));
+
     console.log("file", file)
     if (!file) {
       return;
@@ -32,6 +40,7 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
     };
   };
   const uploadImage = async () => {
+    setIsLoading(true)
     let base64 = file.split(";");
     const data = {
       image: base64[1],
@@ -39,26 +48,31 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
       name: fileName,
     };
     const result = await dispatch(uploadimage(data));
+    console.log(result)
     if (result.type === "feed/uploadImage/fulfilled") {
       setIsUploaded(true);
-      uploadedImages(result.payload.imageURL);
+      uploadedImages(result.payload.imageURL,type);
+
     }
+    setIsLoading(false)
   };
 
   const Preview = () => {
 
 
-    if (type === "image/png") {
+    if (type === "image/png" || type === "image/jpeg" || type === "image/jpg") {
       return (
         <img src={file} style={{height: 100, width: "100%"}} alt="feed" />
       )
-    } if (type === "video/mp4") {
+    }else if (type === "video/mp4") {
+      console.log("videoFilePath", videoFilePath)
       return (
-        <div>video</div>
+        <ReactPlayer url={videoFilePath} width="100%" height="100%" controls={true} />
+
       )
     } else {
       return (
-        <div>pdf</div>
+        <img src={Pdf} style={{height: 100, width: "100%"}} alt="slide" />
       )
     }
   }
@@ -82,15 +96,21 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
                     alignItems: "center",
                   }}
                 >
-                  <BackupIcon
-                    style={{fontSize: 35}}
-                    onClick={() => {
-                      uploadImage(setFilecomponents[index], index);
-                    }}
-                  />
-                  <Typography component="p" variant="p">
-                    Upload to S3
-                  </Typography>
+                  {
+                    isLoading ?
+                      <CircularProgress /> :
+                      <>
+                        <BackupIcon
+                          style={{fontSize: 35}}
+                          onClick={() => {
+                            uploadImage(setFilecomponents[index], index);
+                          }}
+                        />
+                        <Typography component="p" variant="p">
+                          Upload to S3
+                        </Typography>
+                      </>
+                  }
                 </div>
               )}
               <div

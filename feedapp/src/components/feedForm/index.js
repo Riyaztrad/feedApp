@@ -88,28 +88,46 @@ export const FeedForm = () => {
         setErrOpen(false);
     };
 
-    function uploadedImages(file) {
-        setImages([...images, file])
+    function uploadedImages(file, type) {
+        var data = {
+            url: file,
+            type: type
+        }
+        setImages([...images, data])
     }
     const submit = async (event) => {
         event.preventDefault();
         try {
-            let imgobj = [];
+            let files = [];
+         
             images.map((item, index) => {
-                imgobj.push({
-                    type: 'image',
-                    imageUrl: item
-                })
+                if (item.type === "image/png" || item.type === "image/jpeg" || item.type === "image/jpg") {
+                    files.push({
+                        type: 'image',
+                        imageUrl: item
+                    })
+                } else if (item.type === "image/mp4") {
+                    files.push({
+                        type: 'video',
+                        imageUrl: item
+                    })
+                } else {
+                    files.push({
+                        type: 'pdf',
+                        imageUrl: item
+                    })
+                }
                 return 0;
             })
+      
             let data = {
                 compiagn_id: compaignId,
                 compiagn_title: compaigntitle,
                 description: feedDescription,
-                object_urls: imgobj
+                object_urls: files
             }
             const result = await dispatch(createFeed(data));
-           
+
             if (result.type === "feed/createFeed/fulfilled") {
                 handleClick()
                 handleDialogeClose()
@@ -177,7 +195,7 @@ export const FeedForm = () => {
                     Create New Feed
                 </Typography>
             </DialogTitle>
-            <DialogContent style={{width:'100%'}}>
+            <DialogContent style={{width: '100%'}}>
 
 
                 <form className={classes.form} noValidate>

@@ -25,6 +25,7 @@ import {Slideshow} from "../imageSlider";
 import Box from "@material-ui/core/Box";
 import logo from "../../assets/avatar.png";
 import {timeago} from "../../utils/common";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
@@ -71,7 +72,7 @@ export const FeedCard = ({data, index}) => {
   const image = JSON.parse(data.object_urls)[0];
   let feedImage = "";
   let feedImages = [{
-    url: 'https://www.youtube.com/watch?v=_VOXxKDNCuM',
+    url: 'https://www.youtube.com/watch?v=d95PPykB2vE',
     type: 'mp4'
   },
   {
@@ -84,21 +85,21 @@ export const FeedCard = ({data, index}) => {
   },
   ];
 
-  // if (image) {
-  //   if (
-  //     image.imageUrl.indexOf("png") > 0 ||
-  //     image.imageUrl.indexOf("jpg") > 0 ||
-  //     image.imageUrl.indexOf("jpeg")
-  //   ) {
-  //     feedImage = image.imageUrl;
-  //     feedImages = JSON.parse(data.object_urls);
-  //   } else {
-  //     // feedImage = profileImage;
-  //     feedImages = [];
-  //   }
-  // } else {
-  //   feedImage = profileImage;
-  // }
+  if (image) {
+    if (
+      image.imageUrl.indexOf("png") > 0 ||
+      image.imageUrl.indexOf("jpg") > 0 ||
+      image.imageUrl.indexOf("jpeg")
+    ) {
+      feedImage = image.imageUrl;
+      feedImages.push({url:JSON.parse(data.object_urls),type:'jpeg'})
+    } else {
+      // feedImage = profileImage;
+      feedImages = [];
+    }
+  } else {
+    feedImage = profileImage;
+  }
 
   let executeOnClick = (isExpanded) => {
     console.log(isExpanded);
