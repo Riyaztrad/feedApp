@@ -12,6 +12,7 @@ import ReactPlayer from 'react-player'
 import Pdf from '../../assets/pdf.png'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) => {
   const dispatch = useDispatch();
   const [file, setFile] = useState("");
