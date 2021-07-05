@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 // import CommentIcon from "@material-ui/icons/Comment";
 import ShowMoreText from "react-show-more-text";
 // import { Link } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -19,12 +19,13 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Container from "@material-ui/core/Container";
-import profileImage from "../../assets/event.jpeg";
+// import profileImage from "../../assets/event.jpeg";
 // import { HeartButton } from "../heartButton";
-import {Slideshow} from "../imageSlider";
+import { Slideshow } from "../imageSlider";
 import Box from "@material-ui/core/Box";
 import logo from "../../assets/avatar.png";
-import {timeago} from "../../utils/common";
+import { timeago } from "../../utils/common";
+import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,12 +59,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const FeedCard = ({data, index}) => {
+export const FeedCard = ({ data, index }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
   useEffect(() => {
     if (index === 0) {
       setExpanded(true);
@@ -71,20 +72,21 @@ export const FeedCard = ({data, index}) => {
   }, [index]);
   // console.log("data",data)
   const image = JSON.parse(data.object_urls);
-  console.log("image",image)
+  console.log("image", image);
   let feedImage = "";
-  let feedImages = [{
-    url: 'https://www.youtube.com/watch?v=d95PPykB2vE',
-    type: 'mp4'
-  },
-  {
-    url: 'https://aktu.ac.in/pdf/syllabus/Syllabus1819/all/Mechanical%20Engineering.pdf',
-    type: 'pdf'
-  },
-  {
-    url: 'https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0,176,3008,1654&wid=4000&hei=2200&scl=0.752',
-    type: 'jpeg'
-  },
+  let feedImages = [
+    {
+      url: "https://www.youtube.com/watch?v=d95PPykB2vE",
+      type: "mp4",
+    },
+    {
+      url: "https://aktu.ac.in/pdf/syllabus/Syllabus1819/all/Mechanical%20Engineering.pdf",
+      type: "pdf",
+    },
+    {
+      url: "https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/Zugpsitze_mountain.jpg?crop=0,176,3008,1654&wid=4000&hei=2200&scl=0.752",
+      type: "jpeg",
+    },
   ];
 
   // if (image) {
