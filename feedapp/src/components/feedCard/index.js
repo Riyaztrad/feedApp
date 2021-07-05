@@ -30,7 +30,6 @@ import "./index.css";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
-    borderRadius: "20px",
   },
   conatainer: {
     marginBottom: 30,
