@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Slide} from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
 import ReactPlayer from 'react-player'
@@ -6,6 +6,14 @@ import Pdf from '../../assets/pdf.png'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import {Document, Page, pdfjs} from 'react-pdf';
 import {makeStyles} from '@material-ui/core/styles';
+import {Viewer} from '@react-pdf-viewer/core';
+import {SinglePagePdf} from '../SinglePagePdf'
+// Plugins
+import {defaultLayoutPlugin} from '@react-pdf-viewer/default-layout';
+
+// Import styles
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 const useStyles = makeStyles((theme) => ({
     pdf: {
         height: 350,
@@ -16,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         fontsize: 18
     }
 }));
+
 export const Slideshow = ({feedImages}) => {
     const classes = useStyles();
     pdfjs.GlobalWorkerOptions.workerSrc =
@@ -26,7 +35,8 @@ export const Slideshow = ({feedImages}) => {
         setNumPages(numPages);
     }
 
-
+    useEffect(() => {
+    }, [])
     const SingleFile = (item) => {
         if (item.type === "video/mp4") {
             return (
@@ -49,15 +59,16 @@ export const Slideshow = ({feedImages}) => {
             } else {
                 return (
                     <div>
+                        <SinglePagePdf pdf={item.url} className={classes.pdf} />
                         {/* <div className="image-container"  > */}
-                        <Document
+                        {/* <Document
                             className={classes.pdf}
                             file={item.url}
                             onLoadSuccess={onDocumentLoadSuccess}
                         >
                             <Page pageNumber={pageNumber} />
                         </Document>
-                        <p>Page {pageNumber} of {numPages}</p>
+                        <p>Page {pageNumber} of {numPages}</p> */}
                         {/* <img src={Pdf} style={{width: '100%', height: 350}} alt="slide" />
                     
                     <CloudDownloadIcon
@@ -102,14 +113,15 @@ export const Slideshow = ({feedImages}) => {
                                         return (
                                             <div>
                                                 {/* <div className="image-container"  > */}
-                                                <Document
+                                                <SinglePagePdf className={classes.pdf} pdf={item.url} />
+                                                {/* <Document
                                                     className={classes.pdf}
                                                     file={item.url}
                                                     onLoadSuccess={onDocumentLoadSuccess}
                                                 >
                                                     <Page pageNumber={pageNumber} />
                                                 </Document>
-                                                <p>Page {pageNumber} of {numPages}</p>
+                                                <p>Page {pageNumber} of {numPages}</p> */}
                                                 {/* <img src={Pdf} style={{width: '100%', height: 350}} alt="slide" />
                                             
                                             <CloudDownloadIcon

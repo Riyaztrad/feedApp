@@ -4,7 +4,7 @@ import {
     createAsyncThunk,
     createEntityAdapter,
 } from '@reduxjs/toolkit';
-import {getFeeds,upload_image,createFeeds} from '../../api/routes';
+import {getFeeds,upload_image,createFeeds,updateFeedbyid} from '../../api/routes';
 import {LOCALES} from '../../config'
 const feedAdapter = createEntityAdapter();
 
@@ -13,7 +13,8 @@ const initialState = feedAdapter.getInitialState({
     feeds: [],
     createDialog: false,
     imageUrl:'',
-    isCreated:false
+    isCreated:false,
+    isLike:false
 });
 export const fetchFeed = createAsyncThunk(
     'feed/feed',
@@ -50,6 +51,19 @@ export const createFeed = createAsyncThunk(
     },
 );
 
+
+export const likeFeed = createAsyncThunk(
+    'feed/likeFeed',
+    async (data) => {
+        try {
+            const response = await updateFeedbyid(LOCALES.endpoints.update_feedbyid+data.feedId,data);
+            return response;
+        } catch (err) {
+            return Promise.reject('NETWORK_ERROR');
+        }
+    },
+);
+
 const feedSlice = createSlice({
     name: 'feed',
     initialState,
@@ -67,6 +81,9 @@ const feedSlice = createSlice({
         },
         [createFeed.fulfilled]: (state, action) => {
             state.isCreated = action.payload;
+        },
+        [likeFeed.fulfilled]: (state, action) => {
+            state.isLike = action.payload;
         },
     }
 });

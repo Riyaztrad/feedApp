@@ -10,9 +10,13 @@ const upload_image=(url,data) => {
 const createFeeds = (url,data) => {
     return post(url, data);
 };
+const updateFeedbyid = (url,data) => {
+    return post(url, data);
+};
 
 export {
     getFeeds,
     createFeeds,
-    upload_image
+    upload_image,
+    updateFeedbyid
 };

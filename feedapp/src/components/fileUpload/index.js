@@ -12,7 +12,15 @@ import ReactPlayer from 'react-player'
 import Pdf from '../../assets/pdf.png'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
+const options = {
+  density: 100,
+  saveFilename: "untitled",
+  savePath: "./images",
+  format: "png",
+  width: 600,
+  height: 600
+};
+var pdftoimage = require('pdftoimage');
 export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) => {
   const dispatch = useDispatch();
   const [file, setFile] = useState("");
@@ -21,18 +29,37 @@ export const FileUpload = ({uploadedImages, addOne, setFilecomponents, index}) =
   const [isUploaded, setIsUploaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [videoFilePath, setVideoFilePath] = useState(null);
+  const [pdfFilePath, setPdfFilePath] = useState(null);
 
   const selectedFile = (e) => {
     const file = e.target.files[0];
     setVideoFilePath(URL.createObjectURL(e.target.files[0]));
-
+    setPdfFilePath(URL.createObjectURL(e.target.files[0]))
+    let tempFile=URL.createObjectURL(e.target.files[0])
     console.log("file", file)
     if (!file) {
       return;
     }
+
     var fileName = e.target.files[0].name;
     setFileName(fileName);
     setType(e.target.files[0].type);
+
+
+    // if (e.target.files[0].type==='application/pdf') {
+    //   pdftoimage(file, {
+    //     format: 'png',  // png, jpeg, tiff or svg, defaults to png
+    //     prefix: 'img',  // prefix for each image except svg, defaults to input filename
+    //     outdir: 'out'   // path to output directory, defaults to current directory
+    //   })
+    //     .then(function () {
+    //       console.log('Conversion done');
+    //     })
+    //     .catch(function (err) {
+    //       console.log(err);
+    //     });
+    // }
+
     var fReader = new FileReader();
     fReader.readAsDataURL(e.target.files[0]);
 

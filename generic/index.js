@@ -5,7 +5,8 @@ export {
     fetchDialogVisible,
     uploadimage,
     createFeed,
-    createNewFeed
+    createNewFeed,
+    likeFeed
 } from './src/redux/reducers/feedReducer';
 
 export {
