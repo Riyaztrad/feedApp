@@ -1,12 +1,10 @@
 import React from "react";
 import ShowMoreText from "react-show-more-text";
-import {makeStyles} from "@material-ui/core/styles";
-import React, { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useEffect } from "react";
 // import CommentIcon from "@material-ui/icons/Comment";
-import ShowMoreText from "react-show-more-text";
 // import { Link } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
-import { makeStyles } from "@material-ui/core/styles";
 // import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -17,21 +15,19 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ShareIcon from "@material-ui/icons/Share";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+// import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Container from "@material-ui/core/Container";
-import {Slideshow} from "../imageSlider";
-import Box from "@material-ui/core/Box";
-import logo from "../../assets/avatar.png";
-import {timeago} from "../../utils/common";
-import {likeFeed} from 'generic';
-import {useDispatch} from 'react-redux'
-// import profileImage from "../../assets/event.jpeg";
-// import { HeartButton } from "../heartButton";
 import { Slideshow } from "../imageSlider";
 import Box from "@material-ui/core/Box";
 import logo from "../../assets/avatar.png";
 import { timeago } from "../../utils/common";
+import { likeFeed } from "generic";
+import { useDispatch } from "react-redux";
+// import profileImage from "../../assets/event.jpeg";
+// import { HeartButton } from "../heartButton";
+
 import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -69,8 +65,8 @@ export const FeedCard = ({ data, index }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const image = JSON.parse(data.object_urls);
-  const [like, setLike] = React.useState(false)
-  console.log("image", data)
+  const [like, setLike] = React.useState(false);
+  console.log("image", data);
   const [expanded, setExpanded] = React.useState(false);
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
@@ -81,7 +77,6 @@ export const FeedCard = ({ data, index }) => {
     }
   }, [index]);
   // console.log("data",data)
-  const image = JSON.parse(data.object_urls);
   console.log("image", image);
   let feedImage = "";
   let feedImages = [
@@ -103,12 +98,12 @@ export const FeedCard = ({ data, index }) => {
     event.preventDefault();
     const reqdata = {
       like: 1,
-      feedId: data.ID
-    }
-    const result = dispatch(likeFeed(reqdata))
-    console.log("result", result)
-    setLike(true)
-  }
+      feedId: data.ID,
+    };
+    const result = dispatch(likeFeed(reqdata));
+    console.log("result", result);
+    setLike(true);
+  };
 
   let executeOnClick = (isExpanded) => {
     console.log(isExpanded);
@@ -160,17 +155,16 @@ export const FeedCard = ({ data, index }) => {
 
           <CardActions disableSpacing>
             <IconButton
-              onClick={handlelikeFeed} aria-label="like"
-              style={{color:like?'blue':'gray'}}
-              >
-              <ThumbUpIcon /> <span className="text-muted small">Like</span>
+              onClick={handlelikeFeed}
+              aria-label="like"
+              style={{ color: like ? "#1485BD" : "gray" }}
+            >
+              <ThumbUpOutlinedIcon /> <span className="text-muted small">Like</span>
             </IconButton>
             <IconButton aria-label="share">
               <ShareIcon /> <span className="text-muted small">Share</span>
             </IconButton>
-
           </CardActions>
-
         </Card>
       </Box>
     </Container>
