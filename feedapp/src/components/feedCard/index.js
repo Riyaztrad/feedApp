@@ -1,11 +1,8 @@
 import React from "react";
 import ShowMoreText from "react-show-more-text";
-import { makeStyles } from "@material-ui/core/styles";
-import { useEffect } from "react";
-// import CommentIcon from "@material-ui/icons/Comment";
-// import { Link } from "react-router-dom";
-import SendIcon from "@material-ui/icons/Send";
-// import clsx from "clsx";
+import {makeStyles} from "@material-ui/core/styles";
+import {useEffect} from "react";
+
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -15,18 +12,16 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ShareIcon from "@material-ui/icons/Share";
-// import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Container from "@material-ui/core/Container";
-import { Slideshow } from "../imageSlider";
+import {Slideshow} from "../imageSlider";
 import Box from "@material-ui/core/Box";
 import logo from "../../assets/avatar.png";
-import { timeago } from "../../utils/common";
-import { likeFeed } from "generic";
-import { useDispatch } from "react-redux";
-// import profileImage from "../../assets/event.jpeg";
-// import { HeartButton } from "../heartButton";
+import {timeago} from "../../utils/common";
+import {likeFeed} from "generic";
+import {useDispatch} from "react-redux";
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import "./index.css";
 
@@ -61,23 +56,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const FeedCard = ({ data, index }) => {
+export const FeedCard = ({data, index}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const image = JSON.parse(data.object_urls);
   const [like, setLike] = React.useState(false);
-  console.log("image", data);
+  const [love, setLove] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
-  // const handleExpandClick = () => {
-  //   setExpanded(!expanded);
-  // };
   useEffect(() => {
     if (index === 0) {
       setExpanded(true);
     }
   }, [index]);
-  // console.log("data",data)
-  console.log("image", image);
+  console.log("data",data)
   let feedImage = "";
   let feedImages = [
     {
@@ -101,8 +92,16 @@ export const FeedCard = ({ data, index }) => {
       feedId: data.ID,
     };
     const result = dispatch(likeFeed(reqdata));
-    console.log("result", result);
     setLike(true);
+  };
+  const handleLoveFeed = async (event) => {
+    event.preventDefault();
+    const reqdata = {
+      love: 1,
+      feedId: data.ID,
+    };
+    const result = dispatch(likeFeed(reqdata));
+    setLove(true);
   };
 
   let executeOnClick = (isExpanded) => {
@@ -157,9 +156,16 @@ export const FeedCard = ({ data, index }) => {
             <IconButton
               onClick={handlelikeFeed}
               aria-label="like"
-              style={{ color: like ? "#1485BD" : "gray" }}
+              style={{color: like ? "#1485BD" : "gray"}}
             >
               <ThumbUpOutlinedIcon /> <span className="text-muted small">Like</span>
+            </IconButton>
+            <IconButton
+              onClick={handleLoveFeed}
+              aria-label="love"
+              style={{color: love ? "red" : "gray"}}
+            >
+              <FavoriteIcon /> <span className="text-muted small">Love</span>
             </IconButton>
             <IconButton aria-label="share">
               <ShareIcon /> <span className="text-muted small">Share</span>
