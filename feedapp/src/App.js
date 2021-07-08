@@ -11,6 +11,8 @@ import storage from 'redux-persist/lib/storage';
 import {APP_CONFIG} from './utils/config';
 import {Router} from './navigation';
 import './index.css'
+import {SnackbarProvider} from 'notistack';
+
 const {persistor, store} = createStoreAndPersistor(storage);
 function App() {
   useEffect(() => {
@@ -21,9 +23,11 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <div className="back">
-          <Router />
-        </div>
+        <SnackbarProvider maxSnack={3}>
+          <div className="back">
+            <Router />
+          </div>
+        </SnackbarProvider>
       </PersistGate>
     </Provider>
   );

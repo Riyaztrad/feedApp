@@ -22,7 +22,7 @@ import {timeago} from "../../utils/common";
 import {likeFeed} from "generic";
 import {useDispatch} from "react-redux";
 import FavoriteIcon from '@material-ui/icons/Favorite';
-
+import {useCustomNotify} from "../useCustomNotify"
 import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,16 +59,19 @@ const useStyles = makeStyles((theme) => ({
 export const FeedCard = ({data, index}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const customNotify = useCustomNotify();
   const image = JSON.parse(data.object_urls);
   const [like, setLike] = React.useState(false);
+  const [likeCount, setLikeCount] = React.useState(0);
   const [love, setLove] = React.useState(false);
-  const [expanded, setExpanded] = React.useState(false);
+  const [loveCount, setLoveCount] = React.useState(0);
+
+
   useEffect(() => {
-    if (index === 0) {
-      setExpanded(true);
-    }
-  }, [index]);
-  console.log("data",data)
+    setLikeCount(parseInt(data.like_reaction))
+    setLoveCount(parseInt(data.love_reaction))
+  }, [data.love_reaction, data.like_reaction])
+
   let feedImage = "";
   let feedImages = [
     {
@@ -88,24 +91,42 @@ export const FeedCard = ({data, index}) => {
   const handlelikeFeed = async (event) => {
     event.preventDefault();
     const reqdata = {
-      like: 1,
+      like: parseInt(data.like_reaction) + 1,
       feedId: data.ID,
     };
-    const result = dispatch(likeFeed(reqdata));
+    const result = await dispatch(likeFeed(reqdata));
+    console.log("result", result)
+    if (result.payload !== undefined) {
+
+      setLikeCount(parseInt(data.love_reaction) + 1)
+
+    } else {
+      customNotify("Something went wrong!", 'error')
+    }
+
     setLike(true);
   };
+
+
   const handleLoveFeed = async (event) => {
     event.preventDefault();
     const reqdata = {
-      love: 1,
+      love: parseInt(data.love_reaction) + 1,
       feedId: data.ID,
     };
-    const result = dispatch(likeFeed(reqdata));
+    const result = await dispatch(likeFeed(reqdata));
+    console.log("result", result)
+    if (result.payload !== undefined) {
+      setLoveCount(parseInt(data.love_reaction) + 1)
+
+    } else {
+      customNotify("Something went wrong!", 'error')
+
+    }
     setLove(true);
   };
 
-  let executeOnClick = (isExpanded) => {
-    console.log(isExpanded);
+  let executeOnClick = () => {
   };
   return (
     <Container className={classes.conatainer}>
@@ -158,14 +179,14 @@ export const FeedCard = ({data, index}) => {
               aria-label="like"
               style={{color: like ? "#1485BD" : "gray"}}
             >
-              <ThumbUpOutlinedIcon /> <span className="text-muted small">Like</span>
+              <ThumbUpOutlinedIcon /> <span className="text-muted small">{likeCount > 0 ? likeCount : 'Like'}</span>
             </IconButton>
             <IconButton
               onClick={handleLoveFeed}
               aria-label="love"
               style={{color: love ? "red" : "gray"}}
             >
-              <FavoriteIcon /> <span className="text-muted small">Love</span>
+              <FavoriteIcon /> <span className="text-muted small">{loveCount > 0 ? loveCount : 'Love'}</span>
             </IconButton>
             <IconButton aria-label="share">
               <ShareIcon /> <span className="text-muted small">Share</span>
