@@ -46,7 +46,6 @@ export const Feed = () => {
         <AppConainer>
             <Container maxWidth='md'>
                 <Typography component="h1" variant="h4" color="inherit" noWrap className={classes.title}>
-                    Feeds
                 </Typography>
                 {
                     isReady ?

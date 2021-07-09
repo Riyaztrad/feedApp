@@ -27,10 +27,11 @@ import "./index.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "100%",
+    maxWidth: "600px",
   },
   conatainer: {
     marginBottom: 30,
+    marginLeft: '20%'
   },
   media: {
     height: 0,

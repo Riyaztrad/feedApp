@@ -25,6 +25,9 @@ export const Slideshow = ({feedImages}) => {
 
 
     const SingleFile = (item) => {
+        if(item){
+
+      
         if (item.type === "video/mp4") {
             return (
                 <div className="each-slide">
@@ -51,6 +54,7 @@ export const Slideshow = ({feedImages}) => {
                     </div>
                 )
             }
+        }
     }
 
     return (
