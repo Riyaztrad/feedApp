@@ -66,7 +66,7 @@ export const FeedCard = ({data, index}) => {
   const [love, setLove] = React.useState(false);
   const [loveCount, setLoveCount] = React.useState(0);
 
-
+  console.log("data", data)
   useEffect(() => {
     setLikeCount(parseInt(data.like_reaction))
     setLoveCount(parseInt(data.love_reaction))
@@ -91,8 +91,11 @@ export const FeedCard = ({data, index}) => {
   const handlelikeFeed = async (event) => {
     event.preventDefault();
     const reqdata = {
+
       like: parseInt(data.like_reaction) + 1,
-      feedId: data.ID,
+      support: parseInt(data.support_reaction),
+      love: parseInt(data.love_reaction),
+      id: data.ID,
     };
     const result = await dispatch(likeFeed(reqdata));
     console.log("result", result)
@@ -111,8 +114,10 @@ export const FeedCard = ({data, index}) => {
   const handleLoveFeed = async (event) => {
     event.preventDefault();
     const reqdata = {
+      like: parseInt(data.like_reaction),
+      support: parseInt(data.support_reaction),
       love: parseInt(data.love_reaction) + 1,
-      feedId: data.ID,
+      id: data.ID,
     };
     const result = await dispatch(likeFeed(reqdata));
     console.log("result", result)

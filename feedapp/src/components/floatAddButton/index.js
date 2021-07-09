@@ -9,15 +9,15 @@ export const FloatingAddButton = () => {
     <div
       style={{
         position: "fixed",
-        bottom: 50,
-        right: 50,
+        bottom: 10,
+        right: 10,
       }}
     >
       <Fab
         onClick={() => {
           dispatch(showCreateDialog({ isVisible: true }));
         }}
-        style={{ backgroundColor: "#24b877" }}
+        style={{ backgroundColor: "#24b877",height:40,width:40 }}
         aria-label="add"
       >
         <AddIcon style={{ color: "#fff" }} />

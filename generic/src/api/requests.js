@@ -52,7 +52,27 @@ const post = async (url, data) => {
         body: JSON.stringify(data),
     },
     )
-    .then((response) => renderResponse(url, response))
+        .then((response) => renderResponse(url, response))
+        .catch((resp) => {
+            if (__DEV__) {
+
+            }
+            console.log("resp", resp);
+            return Promise.reject();
+        });
+};
+const put = async (url, data) => {
+    return fetch(
+        url, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+    },
+    )
+        .then((response) => renderResponse(url, response))
         .catch((resp) => {
             if (__DEV__) {
 
@@ -62,4 +82,4 @@ const post = async (url, data) => {
         });
 };
 
-export {post, get};
+export {post, get, put};
