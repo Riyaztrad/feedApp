@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import ShowMoreText from "react-show-more-text";
 import {makeStyles} from "@material-ui/core/styles";
 import {useEffect} from "react";
@@ -12,7 +12,6 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ShareIcon from "@material-ui/icons/Share";
-import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Container from "@material-ui/core/Container";
 import {Slideshow} from "../imageSlider";
@@ -21,10 +20,9 @@ import logo from "../../assets/avatar.png";
 import {timeago} from "../../utils/common";
 import {likeFeed} from "generic";
 import {useDispatch} from "react-redux";
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import {useCustomNotify} from "../useCustomNotify"
 import "./index.css";
-
+import {Reactions} from './animatedIcons/container'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "600px",
@@ -63,15 +61,16 @@ export const FeedCard = ({data, index}) => {
   const customNotify = useCustomNotify();
   const image = JSON.parse(data.object_urls);
   const [like, setLike] = React.useState(false);
-  const [likeCount, setLikeCount] = React.useState(0);
-  const [love, setLove] = React.useState(false);
-  const [loveCount, setLoveCount] = React.useState(0);
 
-  console.log("data", data)
+  const [totalReations, setTotalReations] = React.useState(0);
+  const [reaction, setReaction] = useState('Like')
   useEffect(() => {
-    setLikeCount(parseInt(data.like_reaction))
-    setLoveCount(parseInt(data.love_reaction))
-  }, [data.love_reaction, data.like_reaction])
+   
+    let c1 = data.like_reaction ? parseInt(data.like_reaction) !== 0 ? parseInt(data.like_reaction) : 0 : 0
+    let c2 = data.support_reaction ? parseInt(data.support_reaction) !== 0 ? parseInt(data.support_reaction) : 0 : 0
+    let c3 = data.love_reaction ? parseInt(data.love_reaction) !== 0 ? parseInt(data.love_reaction) : 0 : 0
+    setTotalReations(c1 + c2 + c3)
+  }, [data.love_reaction, data.like_reaction,data.support_reaction])
 
   let feedImage = "";
   let feedImages = [
@@ -89,8 +88,30 @@ export const FeedCard = ({data, index}) => {
     },
   ];
 
-  const handlelikeFeed = async (event) => {
-    event.preventDefault();
+  const imogies = [
+    {id: 'like', description: 'Like', img: 'http://i.imgur.com/LwCYmcM.gif'},
+    {id: 'love', description: 'Love', img: 'http://i.imgur.com/k5jMsaH.gif'},
+    // {id: 'haha', description: 'Haha', img: 'http://i.imgur.com/f93vCxM.gif'},
+    {id: 'yay', description: 'Yay', img: 'http://i.imgur.com/a44ke8c.gif'},
+    // {id: 'wow', description: 'Wow', img: 'http://i.imgur.com/9xTkN93.gif'},
+    // {id: 'sad', description: 'Sad', img: 'http://i.imgur.com/tFOrN5d.gif'},
+    // {id: 'angry', description: 'Angry', img: 'http://i.imgur.com/1MgcQg0.gif'}
+  ];
+
+  const onUpdate = (id) => {
+    let reaction = imogies.filter(e => e.id === id)[0];
+    setReaction(reaction)
+    if (reaction.description === 'Like') {
+      handlelikeFeed()
+    } else if (reaction.description === 'Love') {
+      handleLoveFeed()
+    } else if (reaction.description === 'Yay') {
+      handleSuppoprt()
+    }
+
+  }
+
+  const handlelikeFeed = async () => {
     const reqdata = {
 
       like: parseInt(data.like_reaction) + 1,
@@ -101,8 +122,10 @@ export const FeedCard = ({data, index}) => {
     const result = await dispatch(likeFeed(reqdata));
     console.log("result", result)
     if (result.payload !== undefined) {
-
-      setLikeCount(parseInt(data.love_reaction) + 1)
+      let c1 = data.like_reaction ? parseInt(data.like_reaction) !== 0 ? parseInt(data.like_reaction) + 1 : 1 : 1
+      let c2 = data.support_reaction ? parseInt(data.support_reaction) !== 0 ? parseInt(data.support_reaction) : 0 : 0
+      let c3 = data.love_reaction ? parseInt(data.love_reaction) !== 0 ? parseInt(data.love_reaction) : 0 : 0
+      setTotalReations(c1 + c2 + c3)
 
     } else {
       customNotify("Something went wrong!", 'error')
@@ -113,7 +136,6 @@ export const FeedCard = ({data, index}) => {
 
 
   const handleLoveFeed = async (event) => {
-    event.preventDefault();
     const reqdata = {
       like: parseInt(data.like_reaction),
       support: parseInt(data.support_reaction),
@@ -123,13 +145,39 @@ export const FeedCard = ({data, index}) => {
     const result = await dispatch(likeFeed(reqdata));
     console.log("result", result)
     if (result.payload !== undefined) {
-      setLoveCount(parseInt(data.love_reaction) + 1)
+      let c1 = data.like_reaction ? parseInt(data.like_reaction) !== 0 ? parseInt(data.like_reaction) : 0 : 0
+      let c2 = data.support_reaction ? parseInt(data.support_reaction) !== 0 ? parseInt(data.support_reaction) : 0 : 0
+      let c3 = data.love_reaction ? parseInt(data.love_reaction) !== 0 ? parseInt(data.love_reaction) + 1 : 1 : 1
+      setTotalReations(c1 + c2 + c3)
+
 
     } else {
       customNotify("Something went wrong!", 'error')
 
     }
-    setLove(true);
+    
+  };
+
+
+  const handleSuppoprt = async (event) => {
+    const reqdata = {
+      like: parseInt(data.like_reaction),
+      support: parseInt(data.support_reaction) + 1,
+      love: parseInt(data.love_reaction),
+      id: data.ID,
+    };
+    const result = await dispatch(likeFeed(reqdata));
+    console.log("handleSuppoprt", result)
+    if (result.payload !== undefined) {
+      let c1 = data.like_reaction ? parseInt(data.like_reaction) !== 0 ? parseInt(data.like_reaction) : 0 : 0
+      let c2 = data.support_reaction ? parseInt(data.support_reaction) !== 0 ? parseInt(data.support_reaction) + 1 : 1 : 1
+      let c3 = data.love_reaction ? parseInt(data.love_reaction) !== 0 ? parseInt(data.love_reaction) : 0 : 0
+      setTotalReations(c1 + c2 + c3)
+
+    } else {
+      customNotify("Something went wrong!", 'error')
+
+    }
   };
 
   let executeOnClick = () => {
@@ -178,9 +226,47 @@ export const FeedCard = ({data, index}) => {
           ) : (
             feedImage && <CardMedia className={classes.media} image={feedImage} title="Event" />
           )}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center'
+          }}>
+            <div style={{marginLeft: 10, marginTop: 10}}>
+              {
+                imogies.slice(0, 3).map((item, i) => {
+                  return (
+                    <img style={{height: 20, width: 20, marginRight: 5}} src={item.img} alt={'imgogi'} />
 
+                  )
+                })
+              }
+            </div>
+            <span style={{marginTop: 6, marginLeft: 10}}>{totalReations}</span>
+          </div>
           <CardActions disableSpacing>
-            <IconButton
+
+
+            <Reactions onUpdate={onUpdate.bind(this)} items={imogies}>
+              <IconButton
+                onClick={handlelikeFeed}
+                aria-label="like"
+                style={{color: like ? "#1485BD" : "gray"}}
+              >
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column'
+                }}>
+
+                  <img style={{height: 30, width: 30}} src={reaction.img ? reaction.img : 'http://i.imgur.com/LwCYmcM.gif'} alt={'imgogi'} />
+                  <span style={{fontSize: 13, marginTop: 3, display: 'flex', justifyContent: 'center'}}>{reaction.description ? reaction.description : 'Like'}</span>
+
+                </div>
+              </IconButton>
+
+
+            </Reactions>
+            {/* <IconButton
               onClick={handlelikeFeed}
               aria-label="like"
               style={{color: like ? "#1485BD" : "gray"}}
@@ -193,13 +279,21 @@ export const FeedCard = ({data, index}) => {
               style={{color: love ? "red" : "gray"}}
             >
               <FavoriteIcon /> <span className="text-muted small">{loveCount > 0 ? loveCount : 'Love'}</span>
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon /> <span className="text-muted small">Share</span>
+            </IconButton> */}
+            < IconButton aria-label="share" >
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column'
+              }}>
+                <ShareIcon style={{fontSize: 32}} />
+                <span style={{fontSize: 13, marginTop: 3, display: 'flex', justifyContent: 'center'}} className="text-muted small">Share</span>
+              </div>
             </IconButton>
           </CardActions>
         </Card>
       </Box>
-    </Container>
+    </Container >
   );
 };
