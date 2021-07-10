@@ -243,7 +243,7 @@ export const FeedCard = ({data, index}) => {
             })
           }
         </div>
-        <span style={{marginTop: 6, marginLeft: 10}}>{totalReations}</span>
+        <span style={{marginTop: 6, marginLeft: 10}}>{totalReations !== 0 ? totalReations : ''}</span>
       </div>
       <CardActions disableSpacing>
 
