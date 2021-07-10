@@ -56,7 +56,9 @@ export const Feed = () => {
                             )
                         })
                         :
-                        <CircularProgress />
+                        <div style={{display:'flex', justifyContent:'center',alignItems:'center'}}>
+                            <CircularProgress />
+                        </div>
                 }
             </Container>
             <FeedForm />
