@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     // paddingTop: 10,
     // paddingBottom: 10,
     // backgroundColor: "#24b877",
-      backgroundColor: "#24b877",
+    backgroundColor: "#24b877",
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -83,7 +83,7 @@ export const AppConainer = ({ children }) => {
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <img src={logo} style={{ height: 90, width: 'auto' }} alt="logo 1" />
+          <img src={logo} style={{ height: 90, width: "auto" }} alt="logo 1" />
         </Toolbar>
       </AppBar>
 
