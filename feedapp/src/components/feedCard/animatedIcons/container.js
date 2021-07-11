@@ -5,9 +5,9 @@ export const Reactions = (props) => {
 
     const [open, setOpen] = useState(false)
 
-    const toggleOpen = (openState) => {
-        setOpen(openState)
-    }
+    // const toggleOpen = (openState) => {
+    //     setOpen(openState)
+    // }
 
 
     const items = props.items;
@@ -49,8 +49,9 @@ export const Reactions = (props) => {
             onClick={() => {
                 setOpen(!open);
             }}
-            onMouseEnter={() => toggleOpen(true)}
-            onMouseLeave={() => toggleOpen(false)} >
+        // onMouseEnter={() => toggleOpen(true)}
+        // onMouseLeave={() => toggleOpen(false)}
+        >
             <ul style={elementsStyles}>
                 {listItems}
             </ul>
