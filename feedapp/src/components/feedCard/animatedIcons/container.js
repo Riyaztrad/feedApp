@@ -46,6 +46,9 @@ export const Reactions = (props) => {
 
     return (
         <span style={optionsStyles}
+            onClick={() => {
+                setOpen(!open);
+            }}
             onMouseEnter={() => toggleOpen(true)}
             onMouseLeave={() => toggleOpen(false)} >
             <ul style={elementsStyles}>
