@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import ShowMoreText from "react-show-more-text";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Container from '@material-ui/core/Container';
 import profileImage from "../../assets/event.jpeg";
@@ -22,9 +24,11 @@ import logo from '../../assets/avatar.png';
 import {timeago} from '../../utils/common'
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: '100%',
+        width: '100%',
     },
     conatainer: {
+        width:'100%',
+
         marginBottom: 30,
     },
     media: {
@@ -48,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
     image: {
         width: '100%',
         height: '100%',
+    },
+    headerTitle:{
+        color:'#333',
+        fontWeight:550
     }
 }));
 
@@ -66,7 +74,7 @@ export const FeedCard = ({data, index}) => {
     let feedImage = ''
     let feedImages = [];
     if (image) {
-        if (image.imageUrl.indexOf("png") > 0 || image.imageUrl.indexOf("jpg") > 0 || image.imageUrl.indexOf("jpeg") > 0) {
+        if (image.imageUrl?.indexOf("png") > 0 || image.imageUrl?.indexOf("jpg") > 0 || image.imageUrl?.indexOf("jpeg") > 0) {
             feedImage = image.imageUrl
             feedImages = JSON.parse(data.object_urls);
         } else {
@@ -77,11 +85,11 @@ export const FeedCard = ({data, index}) => {
         feedImage = profileImage
     }
     return (
-        <Container className={classes.conatainer}>
-            <Box
+        <Container  className={classes.conatainer}>            <Box
                 boxShadow={15}
                 bgcolor="background.paper"
             >
+                
                 <Card className={classes.root}>
                     <CardHeader
                         avatar={
@@ -92,11 +100,14 @@ export const FeedCard = ({data, index}) => {
                                 />
                             </Avatar>
                         }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
+                        // action={
+                        //     <IconButton aria-label="settings">
+                        //         <MoreVertIcon />
+                        //     </IconButton>
+                        // }
+                        classes={{
+                            title: classes.headerTitle
+                        }}
                         title={data.compiagn_title}
                         subheader={timeago(data.createAt)}
                     />
@@ -112,21 +123,30 @@ export const FeedCard = ({data, index}) => {
                                 title="Event"
                             />
                     }
+                 
+             <CardContent>
+            <Typography paragraph>
+            <ShowMoreText
+                lines={2}
+                more={<span style={{color:'gray', textDecoration:'none',}}>Show more</span>}
+                less={<span style={{color:'gray', textDecoration:'none',}}>Show less</span>}
+                className="content-css"
+                expanded={false}
+                width={700}
+                            > 
+                            {data.description}
+                            </ShowMoreText>
 
-                    {/* */}
-                    <CardContent>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {data.compiagn_title}
                         </Typography>
-                    </CardContent>
+                        </CardContent>
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites">
                             <HeartButton />
                         </IconButton>
                         <IconButton aria-label="share">
-                            <ShareIcon />
+                            <ChatBubbleOutlineIcon />
                         </IconButton>
-                        <IconButton
+                        {/* <IconButton
                             className={clsx(classes.expand, {
                                 [classes.expandOpen]: expanded,
                             })}
@@ -134,16 +154,16 @@ export const FeedCard = ({data, index}) => {
                             aria-expanded={expanded}
                             aria-label="show more"
                         >
-                            <ExpandMoreIcon />
-                        </IconButton>
+                            see more
+                        </IconButton> */}
                     </CardActions>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
                             <Typography paragraph>
                                 {data.description}
                             </Typography>
                         </CardContent>
-                    </Collapse>
+                    </Collapse> */}
                 </Card>
             </Box>
         </Container>);

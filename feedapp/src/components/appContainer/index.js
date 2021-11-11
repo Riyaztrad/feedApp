@@ -1,98 +1,93 @@
 import React from 'react';
-import clsx from 'clsx';
-import {makeStyles} from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import logo from '../../assets/logo.png'
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+// import {createTheme} from '@mui/icons-material/Style'
+import { AppBar, Box, Toolbar, Typography, Button, Grid } from '@material-ui/core';
+import { useTheme, useMediaQuery } from '@material-ui/core';
+import logo from '../../assets/logoold.png'
+import DrawerComponent from './DrawerComponent';
+
+
+
 const useStyles = makeStyles((theme) => ({
-    root: {
+
+    button: {
+        justifyContent: 'left',
         display: 'flex',
+        fontFamily: 'Raleway',
+
+
     },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        // paddingTop: 10,
-        // paddingBottom: 10,
-        backgroundColor: '#24b877',
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-    },
-    appBarShift: {
-        // width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-        width: '20%',
-        textalign: 'right',
-        // backgroundColor:'#fff'
-    },
-    caption: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: '0 8px',
-        flexGrow: 1,
+    font: {
+        fontFamily: 'arial'
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
         // flexGrow: 1,
-        paddingTop: 50,
-        height: '100vh',
-        overflow: 'auto',
+        // paddingTop: 50,
+        // height: '100vh',
+        // overflow: 'auto',
     },
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-        color: '#fff'
-    },
-    addIcon: {
-        height: 45,
-        width: 45
-    },
+
+
 }));
+
+
 
 export const AppConainer = ({children}) => {
     const classes = useStyles();
-    return (
-        <div>
-            <CssBaseline />
-            <AppBar position="absolute" className={clsx(classes.appBar)}>
-                <Toolbar className={classes.toolbar}>
-                    <img src={logo} style={{height: 90, width: 230}} alt="logo 1" />
-                  
-                </Toolbar>
-            </AppBar>
 
-            <main className={classes.content}>
+    //BreakPoint 
+    const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down('md'));
+
+    return (
+        <ThemeProvider>
+            <Box sx={{ flexGrow: 1 }} >
+
+                <AppBar position="static" style={{ backgroundColor: 'white' }}>
+                    <Toolbar style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                        <Grid container spacing={1} >
+                    <Grid item xs={1} >                    <img src={logo} style={{height: 80, width: 200, marginLeft:'-1rem'}} alt="logo 1" />
+                    </Grid>
+                        {
+                            isMatch ?
+                                <DrawerComponent /> :
+                                <><Grid item xs={7} >
+                                    <ul style={{display:'flex', justifyContent:'space-around',  width:'90%', flexDirection:'row', marginTop:'2rem', marginLeft:'2rem', alignItems:'center'}}>
+                                        <li herf='/home' style={{ display: 'inline',color:'black', cursor: 'pointer', fontFamily: 'Exo 2, sans-serif' }}> Home </li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer' }}>Explore </li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer' }}>Recurring </li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer', }}>How It Works</li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer' }}>News</li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer' }}>Blog</li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer' }}>About</li>
+                                        <li style={{ display: 'inline', color:'black', cursor: 'pointer' }}>Contact</li>
+                                    </ul>
+                                </Grid><Grid item xs={4} style={{backgroundColor: 'rgb(36, 184, 119)', height:"6rem",}}>
+                                    <div  style={{display:'flex', justifyContent:'space-around', alignItems:'center', marginTop:'2rem', flexDirection:'row'}}>
+                                        <Button style={{ border: 'none', backgroundColor: 'transparent' }}
+                                            variant="contained"
+                                            color="secondary">Login</Button>
+                                        <Button style={{ border: 'none', backgroundColor: 'transparent' }}
+                                            variant="contained"
+                                            color="secondary">Signup</Button>
+                                        <Button style={{ border: 'none', backgroundColor: '#333', width:'13rem' }}
+                                            variant="contained"
+                                            color="secondary">Create Compaign</Button>
+                                            </div>
+                                    </Grid></>
+                        }
+                        </Grid>
+                    </Toolbar>
+                </AppBar>
+                <main className={classes.content}>
                 <div>
                     <div className={classes.appBarSpacer} />
                     {children}
                 </div>
             </main>
-        </div>
-    );
+            </Box>
+        </ThemeProvider>
+
+    )
 }
