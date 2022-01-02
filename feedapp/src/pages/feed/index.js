@@ -60,7 +60,9 @@ export const Feed = () => {
                             )
                         })
                         :
+                        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
                         <CircularProgress style={{marginRight:'4rem'}} />
+                        </div>
                 }
             </Container>
             <FeedForm />

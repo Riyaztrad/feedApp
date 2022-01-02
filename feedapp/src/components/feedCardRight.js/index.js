@@ -13,21 +13,20 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 const useStyles = makeStyles({
   root: {
-    // minWidth: 275,
-    // width:'20%',
-    // position:'fixed',
-    // margin:'0 2rem',    
+  
     display:'flex',
     justifyContent:'center',
     alignItems:'center',
     background:'none',
-    outline:'none'
+    borderTop:'0.1px solid #D8D8D8'
   },
   button:{
-    color:'gray',
+    color:'#909090',
      fontWeight:'520', 
     fontSize:'1rem',
-     textTransform:'capitalize'
+    fontFamily: "Roboto sans-serif",
+     textTransform:'capitalize',
+     cursor:"pointer"
   },
   bullet: {
     display: 'inline-block',
@@ -48,8 +47,9 @@ const useStyles = makeStyles({
 
   },
   icon:{
-      color:'gray'
-  }
+      color:'#909090',
+      cursor:'pointer'
+  } 
 });
 
 export  const FeedCardRight = () =>{
@@ -57,44 +57,46 @@ export  const FeedCardRight = () =>{
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={classes.root}>
+    <div className={classes.root}>
       <CardContent  style={{ width:'100%'}}>
           <div style={{display:'flex', flexDirection:'row', justifyContent:'space-around', width:'100%'}}>
-<InstagramIcon className={classes.icon}/>
+<InstagramIcon  className={classes.icon}/>
 <LinkedInIcon className={classes.icon}/>
-<FacebookIcon className={classes.icon}/>
 <TwitterIcon className={classes.icon}/>
+<FacebookIcon className={classes.icon}/>
      </div>
      <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', marginTop:'1.5rem'}}>
          <div style={{display:'flex', flexDirection:'row'}}>
-         <Button className={classes.button}>CSR</Button>
-         <span style={{marginTop:'.4rem'}}>
+         <Typography className={classes.button}>CSR</Typography>
+         <span  className="ml-2 mr-2 -mt-1" style={{color:'#8CA1A5'}}>
          |
          </span>
-         <Button className={classes.button}>Meet The Team</Button>
+         <Typography className={classes.button}>Meet The Team</Typography>
          </div>
-         <div style={{display:'flex', flexDirection:'row'}}>
-         <Button className={classes.button}>FAQ'S</Button>
-         <span style={{marginTop:'.4rem'}}>
+         <div style={{display:'flex', flexDirection:'row'}} className="mt-4">
+         <Typography className={classes.button}>FAQ'S</Typography>
+         <span  className="ml-2 mr-2 -mt-1" style={{color:'#8CA1A5'}}>
          |
          </span>
-         <Button className={classes.button}>Privacy Policy</Button>
+         <Typography className={classes.button}>Privacy Policy</Typography>
          </div>
-         <div style={{display:'flex', flexDirection:'row'}}>
-         <Button className={classes.button}>Terms of Use</Button>
-         <span style={{marginTop:'.4rem'}}>
+         <div style={{display:'flex', flexDirection:'row'}} className="mt-4">
+         <Typography className={classes.button}>Terms of Use</Typography>
+         <span  className="ml-2 mr-2 -mt-1" style={{color:'#8CA1A5'}}>
          |
          </span>
-         <Button className={classes.button}>Support</Button>
+         <Typography className={classes.button}>Support</Typography>
          </div>
      </div>
-     <Typography variant="h6" style={{fontWeight:'500', textAlign:'center', color:'gray', fontSize:'1.4rem'}} >Powered by 
-     <span style={{color:'black', fontWeight:'800', fontSize:'1.5rem', marginLeft:5 }}>
+     <Typography variant="h6" style={{fontWeight:'530', textAlign:'center', color:'#404040', fontFamily: "Roboto sans-serif",
+ fontSize:'1.2rem', marginTop:'1rem'}} >Powered by 
+     <span style={{color:'black', fontWeight:'900', fontFamily: "Roboto sans-serif",
+ fontSize:'1.8rem', marginLeft:5 }}>
      tribe
      </span>
      </Typography>
       </CardContent>
     
-    </Card>
+    </div>
   );
 }

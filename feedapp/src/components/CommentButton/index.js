@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import Typography from '@material-ui/core/Typography';
-export const HeartButton = ({id, className}) => {
+export const CommentButton = ({id}) => {
     const [isSelected, setisSelected] = useState(false)
     useEffect(() => {
 
@@ -13,19 +13,18 @@ export const HeartButton = ({id, className}) => {
     }
     return (
         <div style={{
-            // display: 'flex',
-            // flexDirection: 'row',
+            display: 'flex',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'flex-end'
         }}>
             <IconButton
                 aria-label="add to favorites"
                 onClick={onSletect}
-                className={className}
             >
-                <FavoriteIcon style={{color: isSelected ? 'red' : 'gray'}} />
+                            <ChatBubbleOutlineIcon />
                 <Typography variant="caption" component="p" style={{marginLeft:5, fontSize:15}}>
-                    1k
+                    2k
                 </Typography>
             </IconButton>
 

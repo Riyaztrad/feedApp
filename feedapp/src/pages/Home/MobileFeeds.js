@@ -10,11 +10,11 @@ import OutlinedCard from '../../components/feedCardLeft';
 import { FeedCardRight } from '../../components/feedCardRight.js';
 const MobileFeeds = () => {
     return (
-        <Grid container style={{display:'flex', flexDirection:'column', }}>
+        <Grid container style={{display:'flex', flexDirection:'column',background:'#F9F9F9' }}>
         <Grid item md={8} >
            <OutlinedCard/>
         </Grid>
-        <Grid item style={{width:'100%', marginTop:'2rem'}}>
+        <Grid item style={{width:'100%'}}>
             <Feed />
         </Grid>
         <Grid item >

@@ -24,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: "theme.palette.secondary.main",
     },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
+        
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -177,7 +178,7 @@ export const FeedForm = () => {
                     Create New Feed
                 </Typography>
             </DialogTitle>
-            <DialogContent style={{width:'500px'}}>
+            <DialogContent style={{width:'80%'}}>
 
 
                 <form className={classes.form} noValidate>
@@ -189,10 +190,12 @@ export const FeedForm = () => {
                             value={compaignId}
                             onChange={handleChange}
                             label="compiagn"
+                            style={{width:'100%', overflow:'hidden'}}
                         >
                             {dropData.map((item, index) => {
                                 return (
-                                    <MenuItem value={item.compiagnId}>{item.compiagntitle}</MenuItem>
+                                    <MenuItem value={item.compiagnId} style={{width:'100%',display:'flex', overflow:'hidden'}}
+                                    >{item.compiagntitle}</MenuItem>
                                 )
                             })
                             }

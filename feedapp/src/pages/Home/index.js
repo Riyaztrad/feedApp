@@ -29,10 +29,10 @@ export const Home = () => {
     return (
         <div>
              <AppConainer />
-                <Container>
+                <Container style={{background:'#F9F9F9'}}>
                     {isMatch ? <MobileFeeds/>
                     :
-                    <Grid container >
+                    <Grid container>
                         <Grid item xs={3}>
                            <OutlinedCard/>
                         </Grid>

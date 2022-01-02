@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, Button } from '@material-ui/core'
+import React, {useState} from 'react';
+import {Drawer, List, ListItem, ListItemText, ListItemIcon, IconButton, Button} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
 // import HomeOutlinedIcon from '@material-ui/icons-material/HomeOutlined';
 // import LoyaltyOutlinedIcon from '@material-ui/icons-material/LoyaltyOutlined';
@@ -23,14 +23,14 @@ const DrawerComponent = () => {
                 anchor='left'
                 onClose={() => setOpenDrawer(false)}
                 open={openDrawer}
-                style={{ display: 'flex', flexDirection: 'column' }}
+                style={{display: 'flex', flexDirection: 'column'}}
             >
-                <IconButton style={{ marginLeft: 290, marginTop: 10 }}
+                <IconButton style={{marginLeft: 290, marginTop: 10}}
                     onClick={() => setOpenDrawer(false)}
                 >
                     <ClearIcon />
                 </IconButton>
-                <List style={{ width: fullWidth, flex: 1 }} >
+                <List style={{width: fullWidth, flex: 1}} >
                     <ListItem button  >
                         <IconButton >
                             {/* <PersonOutlineOutlinedIcon /> */}
@@ -100,33 +100,59 @@ const DrawerComponent = () => {
                             <ListItemText>Contact</ListItemText>
                         </ListItemIcon>
                     </ListItem>
+                    <div style={{borderBottom:'1px solid #999'}}></div>
+                    <ListItem button  >
+                        <IconButton>
+                            {/* <LoyaltyOutlinedIcon /> */}
+                        </IconButton>
+                        <ListItemIcon >
+                            <ListItemText>Your donations</ListItemText>
+                        </ListItemIcon>
+                    </ListItem>
+                    <ListItem button  >
+                        <IconButton>
+                            {/* <LoyaltyOutlinedIcon /> */}
+                        </IconButton>
+                        <ListItemIcon >
+                            <ListItemText>Groups</ListItemText>
+                        </ListItemIcon>
+                    </ListItem>
+                    <ListItem button  >
+                        <IconButton>
+                            {/* <LoyaltyOutlinedIcon /> */}
+                        </IconButton>
+                        <ListItemIcon >
+                            <ListItemText>All compaigns</ListItemText>
+                        </ListItemIcon>
+                    </ListItem>
                 </List>
-                <div style={{ flexDirection: 'column', marginBottom: 10 }}>
+              
+                <div style={{flexDirection: 'column', marginBottom: 10}}>
                     <Button
-                        style={{ backgroundColor: '#333', width: '80%', marginLeft: 35,color: 'white' }}
+                        style={{backgroundColor: '#333', width: '80%', marginLeft: 35, color: 'white'}}
                         type="submit"
                         variant="contained"
-                        sx={{ mt: 2, mb: 1 }}
+                        sx={{mt: 2, mb: 1}}
                     >
                         Login
                     </Button>
                 </div>
-                <div style={{ marginBottom: 10 }}>
+                <div style={{marginBottom: 10}}>
                     <Button
-                        style={{ backgroundColor: '#333', width: '80%', marginLeft: 35 ,color: 'white'}}
+                        style={{backgroundColor: '#333', width: '80%', marginLeft: 35, color: 'white'}}
                         type="submit"
                         variant="contained"
-                        sx={{ mt: 2, mb: 1 }}
+                        sx={{mt: 2, mb: 1}}
                     >
                         SignUp
                     </Button>
                 </div>
-                <div style={{ marginBottom: 10 }}>
+                <div style={{marginBottom: 10}}>
                     <Button
-                        style={{ backgroundColor: '#333', width: '80%', marginLeft: 35 ,color: 'white'}}
+                        style={{backgroundColor: '#333', width: '80%', marginLeft: 35, color: 'white'}}
                         type="submit"
                         variant="contained"
-                        sx={{ mt: 2, mb: 1 }}
+                        sx={{mt: 2, mb: 1}}
                     >
                         Create Compaign
                     </Button>
@@ -138,9 +164,12 @@ const DrawerComponent = () => {
             </Drawer>
             <IconButton
                 onClick={() => setOpenDrawer(!openDrawer)}
-                style={{marginLeft:'15rem'}}
+                style={{
+                    position: 'absolute',
+                     right: 10
+                }}
             >
-                <MenuIcon style={{ fontSize:'2rem', marginBottom:'1rem', color: 'white' }} />
+                <MenuIcon style={{fontSize: '2.3rem', marginBottom: '1rem', color: '#000'}} />
             </IconButton>
         </>
     )

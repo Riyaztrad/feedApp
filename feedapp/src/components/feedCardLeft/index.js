@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=>({
   root: {
     minWidth: 275,
     width:'100%',
@@ -17,7 +17,12 @@ const useStyles = makeStyles({
     justifyContent:'center',
     alignItems:'center',
     background:'none',
-    outline:'none'
+    marginTop:'-1rem',
+    outline:'none', 
+    backgroundColor:'#fff',
+    [theme.breakpoints.down('md')]: {
+     display: 'none',
+    },
   },
   bullet: {
     display: 'inline-block',
@@ -34,29 +39,34 @@ const useStyles = makeStyles({
       width:'120%',
       padding:10,
       fontSize:17,
-      fontWeight:500
+      fontWeight:500,
+      cursor:'pointer',
+      fontFamily: "Roboto sans-serif",
+
 
   }
-});
+}));
 
 export default function OutlinedCard() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={classes.root}>
-      <CardContent style={{width:'100%'}}>
+    <div className={classes.root}>
+      <CardContent style={{width:'70%'}}>
       <Grid item xs>
-          <Paper className={classes.paper}>Your donations</Paper>
+          <Paper  className={classes.paper}>Your donations</Paper>
         </Grid>
       <Grid item xs style={{marginTop:'1rem'}}>
-          <Typography style={{fontSize:17}}> Groups</Typography>
+          <Typography  style={{fontSize:17, cursor:'pointer', fontFamily: "Roboto sans-serif",
+}}>Groups</Typography>
         </Grid>
-      <Grid item xs style={{marginTop:'1rem'}}>
-      <Typography style={{fontSize:17}}> All compaigns</Typography>
+      <Grid item  xs style={{marginTop:'1rem'}}>
+      <Typography style={{fontSize:17, cursor:'pointer', fontFamily: "Roboto sans-serif",
+}}>All compaigns</Typography>
         </Grid>
       </CardContent>
     
-    </Card>
+    </div>
   );
 }
